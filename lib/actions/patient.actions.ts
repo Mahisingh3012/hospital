@@ -1,0 +1,24 @@
+import { ID, Query } from "node-appwrite"
+import { users } from "../appwrite.config"
+
+export const createUser = async (user: CreateUserParams) => {
+  try {
+    const newUser = await users.create(
+      ID.unique(),
+      user.email,
+      user.phone,
+      undefined,
+      user.name
+    );
+    return newUser; // Always return the created user
+  } catch (error: any) {
+    if (error && error.code === 409) {
+      const documents = await users.list([
+        Query.equal('email', [user.email])
+      ]);
+      // Return the found user (adjust structure according to your SDK)
+      return documents?.users ? documents.users[0] : null;
+    }
+    throw error; // Propagate unexpected errors so UI can handle
+  }
+};
