@@ -29,6 +29,24 @@ const PatientForm = () => {
 const router = useRouter();
 const[isLoading, setIsLoading] = useState(false);
 
+  const navigateWithFallback = (details?: {
+    name: string;
+    email: string;
+    phone: string;
+  }) => {
+    const fallbackUserId = `temp_${Date.now()}_${Math.random()
+      .toString(36)
+      .substr(2, 9)}`;
+
+    const query = new URLSearchParams({
+      fallbackName: details?.name ?? "",
+      fallbackEmail: details?.email ?? "",
+      fallbackPhone: details?.phone ?? "",
+    });
+
+    router.push(`/patients/${fallbackUserId}/new-appointment?${query.toString()}`);
+  };
+
   const form = useForm<z.infer<typeof UserFormValidation>>({
     resolver: zodResolver(UserFormValidation),
     defaultValues: {
@@ -41,16 +59,28 @@ const[isLoading, setIsLoading] = useState(false);
  async function onSubmit({name, email, phone}: z.infer<typeof UserFormValidation>) {
     setIsLoading(true);
 
-    try{
+    try {
         const userData = {name, email, phone };
 
-        const user = await createUser(userData)
-         if(user) router.push(`/patients/${user.$id}/register`)
-      }
-        catch(error){
-          console.log(error);
-        }
-      }
+        const user = await createUser(userData);
+        
+        const nextUserId =
+          user?.$id || user?.id || `temp_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+        const query = new URLSearchParams({
+          fallbackName: name,
+          fallbackEmail: email,
+          fallbackPhone: phone,
+        });
+
+        router.push(`/patients/${user.$id}/register`);
+    } catch(error: any) {
+        // This should rarely happen now due to fallback, but handle gracefully
+        console.error('Unexpected error creating user:', error);
+        
+        navigateWithFallback({ name, email, phone });
+    }
+  }
 
   return (
     <Form {...form}>

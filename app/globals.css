@@ -27,9 +27,67 @@
     background: transparent;
   }
 }
+ /* ==== Stat Card */
+ .stat-card {
+  @apply flex flex-1 flex-col gap-6 rounded-2xl bg-cover p-6 shadow-lg;
+}
+
+/* ==== Status Badge */
+.status-badge {
+  @apply flex w-fit items-center gap-2 rounded-full px-4 py-2;
+}
+
+/* Green primary button */
+.shad-primary-btn {
+  @apply bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-lg transition;
+}
+
+/* Red cancel button */
+.shad-danger-btn {
+  @apply bg-red-500 hover:bg-red-600 text-white font-medium py-3 rounded-lg transition;
+}
+
 
 @layer utilities {
   /* ===== UTILITIES */
+/* === File Upload === */
+.file-upload {
+  @apply flex flex-col items-center justify-center
+    w-full h-64 cursor-pointer rounded-xl
+    border border-dashed border-gray-600
+    bg-gray-800/50
+    hover:bg-gray-800 transition;
+}
+
+.file-upload_label {
+  @apply mt-4 flex flex-col items-center gap-1 text-center;
+}
+
+.admin-header {
+  @apply flex items-center justify-between py-4;
+}
+
+.bg-appointments {
+  @apply bg-gradient-to-br from-[#2f3237] to-[#1c1e21];
+}
+
+.bg-pending {
+  @apply bg-gradient-to-br from-[#2f3237] to-[#1c1e21];
+}
+
+.bg-cancelled {
+  @apply bg-gradient-to-br from-[#2f3237] to-[#1c1e21];
+}
+
+/* === Typography Utilities === */
+.text-14-regular {
+  @apply text-[14px] font-normal text-gray-300;
+}
+
+.text-12-regular {
+  @apply text-[12px] font-normal text-gray-400;
+}
+
 
   .sidebar {
     @apply w-full max-w-72 flex-col overflow-auto bg-gray-800 px-7 py-10;
@@ -69,6 +127,21 @@
   .sub-container {
     @apply mx-auto flex size-full flex-col py-10;
   }
+/* SELECT TRIGGER */
+.shad-select-trigger {
+  @apply flex h-12 w-full items-center justify-between rounded-md border border-[#2A2F36] bg-[#0f1115] px-3 text-white shadow-sm;
+}
+
+/* SELECT CONTENT (Dropdown box) */
+.shad-select-content {
+  @apply rounded-md border border-[#2A2F36] bg-[#0f1115] text-white;
+}
+
+/* SELECT ITEM */
+.shad-select-content .select-item {
+  @apply cursor-pointer text-white hover:bg-[#1a1d21];
+}
+
 
   /* ... rest of your utilities remain the same ... */
 }

@@ -18,20 +18,7 @@ const SubmitButton = ({ isLoading, className, children }: ButtonProps) => {
         "w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-lg transition"
       }
     >
-      {isLoading ? (
-        <div className="flex items-center gap-4">
-          <Image
-            src="/assets/icons/loader.svg"
-            alt="loader"
-            width={24}
-            height={24}
-            className="animate-spin"
-          />
-          Loading ...
-        </div>
-      ) : (
-        children
-      )}
+      {isLoading ? "Loading..." : children}
     </Button>
   );
 };
